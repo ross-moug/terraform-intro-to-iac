@@ -1,6 +1,6 @@
 provider "aws" {
   profile    = "default"
-  region     = "eu-west-1"
+  region     = var.region
 }
 
 # New resource for the S3 bucket our application will use.
@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "example" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-06ce3edf0cff21f07"
+  ami           = var.amis[var.region]
   instance_type = "t2.micro"
   provisioner "local-exec" {
     command = "echo ${aws_instance.example.public_ip} > ip_address.txt"
